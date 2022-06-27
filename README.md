@@ -84,9 +84,6 @@ wumpus_kb.ask_if_true(OK22)
 ```
 
 ## OUTPUT:
-### clauses
-![image](https://user-images.githubusercontent.com/75235488/175973491-593b9b3f-5dad-460f-afd1-768dfec9e62f.png)
-
 ### check
 ![image](https://user-images.githubusercontent.com/65499285/175802972-4159eb7d-8d72-44d9-9ead-6a9828558ad0.png)
 
