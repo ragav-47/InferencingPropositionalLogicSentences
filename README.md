@@ -35,29 +35,60 @@ Using wumpus_kb.ask_if_true() to get the result based on TRUE value.
 ```python
 from utils import *
 from logic import *
-char=['P','B','W','S']
-abc=''
-ind=[1,2,3,4]
-for i in char:
-    for x in ind:
-        for y in ind:
-            abc= abc+(str(i)+str(x)+str(y))+','
-abc= abc[0:-1]
-abc
 wumpus_kb = PropKB()
-P11, P12, P21, P22, P31, B11, B21 = expr('P11, P12, P21, P22, P31, B11, B21')
+P11,P12,P21,P22,B11,B12,B21,B22,W11,W12,W21,W22,S11,S12,S21,S22,OK11,OK12,OK21,OK22=expr('P11,P12,P21,P22,B11,B12,B21,B22,W11,W12,W21,W22,S11,S12,S21,S22,OK11,OK12,OK21,OK22')
+
 wumpus_kb.tell(B11 | '<=>' | ((P12 | P21)))
-wumpus_kb.tell(B21 | '<=>' | ((P11 | P22 | P31)))
+wumpus_kb.tell(B12 | '<=>' | ((P11 | P22)))
+wumpus_kb.tell(B21 | '<=>' | ((P11 | P22)))
+wumpus_kb.tell(B22 | '<=>' | ((P21 | P12)))
+
+wumpus_kb.tell(S11 | '<=>' | ((W12 | W21)))
+wumpus_kb.tell(S12 | '<=>' | ((W11 | W22)))
+wumpus_kb.tell(S21 | '<=>' | ((W11 | W22)))
+wumpus_kb.tell(S22 | '<=>' | ((W21 | W12)))
+
+wumpus_kb.tell(~OK11| '<=>' | ((W11 | P11)))
+wumpus_kb.tell(~OK12| '<=>' | ((W12 | P12)))
+wumpus_kb.tell(~OK21| '<=>' | ((W21 | P21)))
+wumpus_kb.tell(~OK22| '<=>' | ((W22 | P22)))
+
 wumpus_kb.clauses
-wumpus_kb.ask_if_true(~P22)
+
+# 1,1
+wumpus_kb.tell(~P11)
+wumpus_kb.tell(~W11)
+wumpus_kb.tell(~S11)
+wumpus_kb.tell(~B11)
+
+# 2,1
+wumpus_kb.tell(~P21)
+wumpus_kb.tell(~W21)
+wumpus_kb.tell(S21)
+wumpus_kb.tell(~B21)
+
+# 1,2
+wumpus_kb.tell(~P12)
+wumpus_kb.tell(~W12)
+wumpus_kb.tell(~S12)
+wumpus_kb.tell(~B12)
+
+# 2,2
+wumpus_kb.tell(~P22)
+wumpus_kb.tell(~W22)
+wumpus_kb.tell(~S22)
+wumpus_kb.tell(~B22)
+
+wumpus_kb.ask_if_true(OK22)
+
 ```
 
 ## OUTPUT:
 ### clauses
 ![image](https://user-images.githubusercontent.com/75235488/175973491-593b9b3f-5dad-460f-afd1-768dfec9e62f.png)
 
-### check pit
-![image](https://user-images.githubusercontent.com/75235488/175973840-f194470d-acea-42c7-9fcb-ddc25a4b3e17.png)
+### check
+![image](https://user-images.githubusercontent.com/65499285/175802972-4159eb7d-8d72-44d9-9ead-6a9828558ad0.png)
 
 ## RESULT
 Thus, the developed agent can predict the next move in the wumpus game using propositional logic sentences .
